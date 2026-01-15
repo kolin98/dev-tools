@@ -4,7 +4,7 @@ import { Xid } from "xid-ts";
 import { ulid } from "ulid";
 import { createId as cuid2 } from "@paralleldrive/cuid2";
 
-type IdentifierType = "uuid4" | "uuid1" | "nanoid" | "xid" | "cuid2" | "ulid";
+export type IdentifierType = "uuid4" | "uuid1" | "nanoid" | "xid" | "cuid2" | "ulid";
 
 /**
  * Generates identifiers based on the specified type and count

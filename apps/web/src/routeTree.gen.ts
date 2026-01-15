@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ToolsGeneratorsIdentifiersRouteImport } from './routes/tools/generators/identifiers'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsGeneratorsIdentifiersRoute =
+  ToolsGeneratorsIdentifiersRouteImport.update({
+    id: '/tools/generators/identifiers',
+    path: '/tools/generators/identifiers',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/tools/generators/identifiers': typeof ToolsGeneratorsIdentifiersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/tools/generators/identifiers': typeof ToolsGeneratorsIdentifiersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/tools/generators/identifiers': typeof ToolsGeneratorsIdentifiersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/tools/generators/identifiers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/tools/generators/identifiers'
+  id: '__root__' | '/' | '/tools/generators/identifiers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ToolsGeneratorsIdentifiersRoute: typeof ToolsGeneratorsIdentifiersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/generators/identifiers': {
+      id: '/tools/generators/identifiers'
+      path: '/tools/generators/identifiers'
+      fullPath: '/tools/generators/identifiers'
+      preLoaderRoute: typeof ToolsGeneratorsIdentifiersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ToolsGeneratorsIdentifiersRoute: ToolsGeneratorsIdentifiersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
