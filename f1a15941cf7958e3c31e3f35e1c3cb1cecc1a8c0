@@ -1,0 +1,31 @@
+apps/web/src/routes/index.tsx
+  c73c1e519dbed834 3,34-45
+apps/web/src/routes/tools/converters/datetime.tsx
+  c73c1e519dbed834 26-27,29-30,45,64,71-75
+packages/core/src/index.ts
+  c73c1e519dbed834 6-8
+apps/web/src/components/app-sidebar.tsx
+  c73c1e519dbed834 18,45-55,62,125-132
+packages/core/src/datetime.ts
+  c73c1e519dbed834 1-275
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.31",
+  "base_commit_sha": "f1a15941cf7958e3c31e3f35e1c3cb1cecc1a8c0",
+  "prompts": {
+    "c73c1e519dbed834": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_43d692e6affeDW4VW0mtNbZ6qv",
+        "model": "opencode/gpt-5-nano"
+      },
+      "human_author": "kolin98 <cpt.beatle@gmail.com>",
+      "messages": [],
+      "total_additions": 379,
+      "total_deletions": 65,
+      "accepted_lines": 323,
+      "overriden_lines": 0
+    }
+  }
+}
