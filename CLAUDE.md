@@ -1,6 +1,6 @@
 # Project Overview
 
-This is a **pnpm monorepo** for developer tools web app, using **pnpm workspaces** with a focus on modern web development using React, TypeScript, Tailwind CSS v4, and shadcn/ui components.
+This is a **pnpm monorepo** for developer tools web app, using **pnpm workspaces** with a focus on modern web development using React, TypeScript, TanStack Router, Tailwind CSS v4, and shadcn/ui components.
 
 ## Monorepo Structure
 
@@ -33,6 +33,7 @@ This means:
 
 #### apps/web
 - **Framework**: Vite + React 19
+- **Routing**: TanStack Router v1.x (file-based routing)
 - **Styling**: Tailwind CSS v4 with shadcn/ui components
 - **Language**: TypeScript
 - **Dependencies**: Uses workspace `core` package (`"core": "workspace:*"`)
@@ -101,6 +102,129 @@ import { House, User, Settings, ChartBar } from "@phosphor-icons/react"
 ```
 
 When adding new shadcn/ui components, they will automatically use Phosphor icons.
+
+## Routing: TanStack Router
+
+The app uses **TanStack Router v1.x** with file-based routing for type-safe navigation and data loading.
+
+### Router Configuration
+
+- **Router Instance**: `apps/web/src/router.tsx` - Main router configuration
+- **Route Tree**: Auto-generated at `apps/web/src/routeTree.gen.ts` by Vite plugin
+- **Entry Point**: `apps/web/src/main.tsx` - Uses `<RouterProvider />` to render routes
+
+### Route Structure
+
+Routes are defined in `apps/web/src/routes/` using file-based conventions:
+
+```
+routes/
+├── __root.tsx          # Root layout (wraps all routes)
+├── index.tsx           # Home page (/)
+├── about.tsx           # About page (/about)
+├── users/
+│   ├── index.tsx       # Users list (/users)
+│   └── $userId.tsx     # User detail (/users/:userId)
+└── blog_.$slug.tsx     # Blog post (/blog/:slug)
+```
+
+### File-Based Routing Conventions
+
+| File Pattern | Route Path | Description |
+|--------------|------------|-------------|
+| `index.tsx` | `/` | Root/home page |
+| `about.tsx` | `/about` | Simple route |
+| `users/index.tsx` | `/users` | Nested index |
+| `users/$userId.tsx` | `/users/:userId` | Dynamic parameter |
+| `$slug.edit.tsx` | `/:slug/edit` | Dynamic + extension |
+| `blog_.$slug.tsx` | `/blog/:slug` | Catchall with extension |
+
+### Creating Routes
+
+**Simple Route** (`routes/about.tsx`):
+```tsx
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/about')({
+  component: AboutPage,
+})
+
+function AboutPage() {
+  return <div>About Page</div>
+}
+```
+
+**Dynamic Route** (`routes/users/$userId.tsx`):
+```tsx
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/users/$userId')({
+  component: UserDetail,
+})
+
+function UserDetail() {
+  const { userId } = Route.useParams()
+  return <div>User: {userId}</div>
+}
+```
+
+**Route with Data Loading**:
+```tsx
+export const Route = createFileRoute('/posts/$postId')({
+  loader: async ({ params }) => {
+    const response = await fetch(`/api/posts/${params.postId}`)
+    return response.json()
+  },
+  component: PostDetail,
+})
+
+function PostDetail() {
+  const post = Route.useLoaderData()
+  return <div>{post.title}</div>
+}
+```
+
+### Navigation
+
+**Link Component** (with active state):
+```tsx
+import { Link } from '@tanstack/react-router'
+
+<Link to="/" className="[&.active]:font-bold">
+  Home
+</Link>
+
+<Link to="/users/$userId" params={{ userId: '123' }}>
+  User Profile
+</Link>
+```
+
+**Programmatic Navigation**:
+```tsx
+import { useRouter } from '@tanstack/react-router'
+
+function MyComponent() {
+  const router = useRouter()
+
+  const handleClick = () => {
+    router.navigate({
+      to: '/users/$userId',
+      params: { userId: '123' },
+    })
+  }
+
+  return <button onClick={handleClick}>Go to User</button>
+}
+```
+
+### Root Layout
+
+The root layout (`routes/__root.tsx`) wraps all routes with:
+- Navigation header
+- `<Outlet />` for rendering child routes
+- DevTools panel (development only)
+
+Modify this file to add persistent UI elements (navbars, sidebars, footers).
 
 ## pnpm Commands in Monorepo
 
@@ -247,6 +371,7 @@ mkdir packages/new-package
 3. **Workspace dependencies** use `"workspace:*"` version syntax
 4. **TypeScript paths** are configured per-package for clean imports
 5. **CSS variables** are used for theming - modify `apps/web/src/index.css` for theme changes
+6. **Routes are file-based** - create routes in `apps/web/src/routes/` directory, route tree auto-generates on dev server start
 
 ## Common Issues
 
@@ -268,3 +393,12 @@ pnpm --filter web dlx shadcn@latest add <component>
 ### TypeScript path resolution issues
 
 Check that the `tsconfig.json` in your package properly extends `tsconfig.base.json` and includes correct path mappings.
+
+### TanStack Router route tree not generating
+
+If the route tree file (`routeTree.gen.ts`) is not generated or outdated:
+1. Ensure `@tanstack/router-plugin` is installed
+2. Check that `TanStackRouterVite()` is placed **before** `react()` in `vite.config.ts`
+3. Restart the dev server after adding/removing routes
+4. Delete `src/routeTree.gen.ts` and restart the server to regenerate
+5. Verify `tsconfig.app.json` includes `"src/routeTree.gen.ts"` in the `include` array
