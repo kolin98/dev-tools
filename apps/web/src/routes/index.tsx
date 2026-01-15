@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Engine, Key } from '@phosphor-icons/react'
+import { Engine, Key, Binary, Blueprint } from '@phosphor-icons/react'
 
 export const Route = createFileRoute('/')({
   component: IndexComponent,
@@ -16,6 +16,18 @@ const toolGroups = [
         description: 'Generate unique identifiers like UUID, ULID, NanoID, and more',
         icon: Key,
         path: '/tools/generators/identifiers',
+      },
+    ],
+  },
+  {
+    name: 'Encoders / Decoders',
+    icon: Binary,
+    tools: [
+      {
+        title: 'Base64',
+        description: 'Encode and decode Base64 text with support for multiple encodings',
+        icon: Blueprint,
+        path: '/tools/encoders/base64',
       },
     ],
   },

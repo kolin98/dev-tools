@@ -372,6 +372,7 @@ mkdir packages/new-package
 4. **TypeScript paths** are configured per-package for clean imports
 5. **CSS variables** are used for theming - modify `apps/web/src/index.css` for theme changes
 6. **Routes are file-based** - create routes in `apps/web/src/routes/` directory, route tree auto-generates on dev server start
+7. **NEVER add co-authored-by tags to commit messages** - When creating git commits, **NEVER** include `Co-Authored-By:` trailers or any attribution to AI assistants in the commit message. This is a strict rule that must always be followed. Commit messages should only describe what was changed and why.
 
 ## Common Issues
 

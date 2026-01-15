@@ -15,7 +15,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { WrenchIcon, EngineIcon, KeyIcon, CaretRightIcon } from "@phosphor-icons/react"
+import { WrenchIcon, EngineIcon, KeyIcon, CaretRightIcon, BinaryIcon, BlueprintIcon } from "@phosphor-icons/react"
 import { Link } from "@tanstack/react-router"
 import * as React from "react"
 
@@ -31,11 +31,23 @@ const tools = {
       },
     ],
   },
+  encoders: {
+    label: "Encoders / Decoders",
+    icon: BinaryIcon,
+    items: [
+      {
+        title: "Base64",
+        path: "/tools/encoders/base64",
+        icon: BlueprintIcon,
+      },
+    ],
+  },
 }
 
 export function AppSidebar() {
   const [openGroups, setOpenGroups] = React.useState<Record<string, boolean>>({
     generators: true,
+    encoders: true,
   })
 
   const toggleGroup = (group: string) => {
