@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Engine, Key, Binary, Blueprint } from '@phosphor-icons/react'
+import { Engine, Key, Binary, Blueprint, Swap, Clock } from '@phosphor-icons/react'
 
 export const Route = createFileRoute('/')({
   component: IndexComponent,
@@ -28,6 +28,18 @@ const toolGroups = [
         description: 'Encode and decode Base64 text with support for multiple encodings',
         icon: Blueprint,
         path: '/tools/encoders/base64',
+      },
+    ],
+  },
+  {
+    name: 'Converters',
+    icon: Swap,
+    tools: [
+      {
+        title: 'Date-time',
+        description: 'Convert between various date and time formats',
+        icon: Clock,
+        path: '/tools/converters/datetime',
       },
     ],
   },

@@ -15,7 +15,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { WrenchIcon, EngineIcon, KeyIcon, CaretRightIcon, BinaryIcon, BlueprintIcon } from "@phosphor-icons/react"
+import { WrenchIcon, EngineIcon, KeyIcon, CaretRightIcon, BinaryIcon, BlueprintIcon, SwapIcon, ClockIcon } from "@phosphor-icons/react"
 import { Link } from "@tanstack/react-router"
 import * as React from "react"
 
@@ -42,12 +42,24 @@ const tools = {
       },
     ],
   },
+  converters: {
+    label: "Converters",
+    icon: SwapIcon,
+    items: [
+      {
+        title: "Date-time",
+        path: "/tools/converters/datetime",
+        icon: ClockIcon,
+      },
+    ],
+  },
 }
 
 export function AppSidebar() {
   const [openGroups, setOpenGroups] = React.useState<Record<string, boolean>>({
     generators: true,
     encoders: true,
+    converters: true,
   })
 
   const toggleGroup = (group: string) => {
@@ -110,7 +122,14 @@ export function AppSidebar() {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <div className="px-4 py-2 text-xs text-muted-foreground">
+          <div className="flex flex-col gap-1">
+            <div>DevTools v0.1.0</div>
+            <div>© 2026 Konrad Żukowski</div>
+          </div>
+        </div>
+      </SidebarFooter>
     </Sidebar>
   )
 }

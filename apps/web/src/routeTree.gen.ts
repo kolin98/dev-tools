@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolsGeneratorsIdentifiersRouteImport } from './routes/tools/generators/identifiers'
 import { Route as ToolsEncodersBase64RouteImport } from './routes/tools/encoders/base64'
+import { Route as ToolsConvertersDatetimeRouteImport } from './routes/tools/converters/datetime'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,37 +30,55 @@ const ToolsEncodersBase64Route = ToolsEncodersBase64RouteImport.update({
   path: '/tools/encoders/base64',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsConvertersDatetimeRoute = ToolsConvertersDatetimeRouteImport.update({
+  id: '/tools/converters/datetime',
+  path: '/tools/converters/datetime',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/tools/converters/datetime': typeof ToolsConvertersDatetimeRoute
   '/tools/encoders/base64': typeof ToolsEncodersBase64Route
   '/tools/generators/identifiers': typeof ToolsGeneratorsIdentifiersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/tools/converters/datetime': typeof ToolsConvertersDatetimeRoute
   '/tools/encoders/base64': typeof ToolsEncodersBase64Route
   '/tools/generators/identifiers': typeof ToolsGeneratorsIdentifiersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/tools/converters/datetime': typeof ToolsConvertersDatetimeRoute
   '/tools/encoders/base64': typeof ToolsEncodersBase64Route
   '/tools/generators/identifiers': typeof ToolsGeneratorsIdentifiersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/tools/encoders/base64' | '/tools/generators/identifiers'
+  fullPaths:
+    | '/'
+    | '/tools/converters/datetime'
+    | '/tools/encoders/base64'
+    | '/tools/generators/identifiers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/tools/encoders/base64' | '/tools/generators/identifiers'
+  to:
+    | '/'
+    | '/tools/converters/datetime'
+    | '/tools/encoders/base64'
+    | '/tools/generators/identifiers'
   id:
     | '__root__'
     | '/'
+    | '/tools/converters/datetime'
     | '/tools/encoders/base64'
     | '/tools/generators/identifiers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ToolsConvertersDatetimeRoute: typeof ToolsConvertersDatetimeRoute
   ToolsEncodersBase64Route: typeof ToolsEncodersBase64Route
   ToolsGeneratorsIdentifiersRoute: typeof ToolsGeneratorsIdentifiersRoute
 }
@@ -87,11 +106,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsEncodersBase64RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/converters/datetime': {
+      id: '/tools/converters/datetime'
+      path: '/tools/converters/datetime'
+      fullPath: '/tools/converters/datetime'
+      preLoaderRoute: typeof ToolsConvertersDatetimeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ToolsConvertersDatetimeRoute: ToolsConvertersDatetimeRoute,
   ToolsEncodersBase64Route: ToolsEncodersBase64Route,
   ToolsGeneratorsIdentifiersRoute: ToolsGeneratorsIdentifiersRoute,
 }
