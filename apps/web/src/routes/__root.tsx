@@ -29,7 +29,9 @@ function RootLayout() {
           </main>
         </SidebarInset>
       </SidebarProvider>
-      <TanStackRouterDevtools />
+      {import.meta.env.DEV && (
+        <TanStackRouterDevtools />
+      )}
     </ThemeProvider>
   )
 }
