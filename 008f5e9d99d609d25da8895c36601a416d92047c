@@ -1,0 +1,23 @@
+CLAUDE.md
+  dc2bb4dc87fd4307 1-2,4-270
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.31",
+  "base_commit_sha": "008f5e9d99d609d25da8895c36601a416d92047c",
+  "prompts": {
+    "dc2bb4dc87fd4307": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9e07150d-5670-4a2a-98d5-d0af03ea49ad",
+        "model": "glm-4.7"
+      },
+      "human_author": "kolin98 <cpt.beatle@gmail.com>",
+      "messages": [],
+      "total_additions": 281,
+      "total_deletions": 8,
+      "accepted_lines": 279,
+      "overriden_lines": 1
+    }
+  }
+}
