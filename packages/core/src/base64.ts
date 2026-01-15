@@ -20,7 +20,7 @@ export function encodeToBase64(text: string, encoding: EncodingType = 'utf-8'): 
       return btoa(text)
     } else if (encoding === 'latin1') {
       // Latin1/ISO-8859-1 encoding - uses escape for non-Latin1 chars
-      const encoded = encodeURIComponent(text).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+      const encoded = encodeURIComponent(text).replace(/%([0-9A-F]{2})/g, (_match, p1) => {
         return String.fromCharCode(parseInt(p1, 16))
       })
       return btoa(encoded)
